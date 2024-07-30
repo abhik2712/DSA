@@ -1,0 +1,7 @@
+// LC Problem Number
+
+2. Problem: <paste the link to problem>
+
+3. Main Observation
+
+4. Optimal Code

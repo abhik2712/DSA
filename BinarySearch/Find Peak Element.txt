@@ -1,0 +1,22 @@
+// LC 162
+
+2. Problem: https://leetcode.com/problems/find-peak-element/description/
+
+A peak element is an element that is strictly greater than its neighbors.
+
+Given a 0-indexed integer array nums, find a peak element, and return its index. If the array contains multiple peaks, return the index to any of the peaks.
+
+You may imagine that nums[-1] = nums[n] = -∞. In other words, an element is always considered to be strictly greater than a neighbor that is outside the array.
+
+You must write an algorithm that runs in O(log n) time.
+
+3. Main Observation
+
+    a. Array pattern: inc inc inc [inc] dec dec dec inc inc [inc] dec dec dec
+    b. Choose mid element : if arr[mid]>arr[mid-1] and arr[mid]>arr[mid+1] -> peak found : so our range is lo = 1, hi = n-2
+    c. else if mid is in increasing slope lo = mid+1; // peak is to the right
+    d. else hi = mid-1 // this hadles the case [1, 5, 1, 2, 4] -> [5,1,2] if we put else condition 
+    arr[mid]>arr[mid-1] i.e. decreasing slope our while(lo<=hi) goes in infinite loop
+
+
+4. Optimal Code
