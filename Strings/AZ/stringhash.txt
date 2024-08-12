@@ -1,0 +1,53 @@
+
+Hash function: s1p^n-1 + s2p^n-2 + ... + snp^0
+
+ll quickHash(string s, ll p, ll mod){
+    ll ans = s[0]-'a'+1;
+    for(int i=1;i<s.size();i++){
+        ans = (ans*p + (s[i]-'a'+1))%mod;
+    }
+    return ans;
+}
+
+struct hasher{
+    int sz;
+    ll mod, p;
+    vector<ll> fHash;
+    vector<ll> pk;
+    void init(string s, ll _p, ll _mod){
+        sz = s.length();
+        mod = _mod;
+        p = _p;
+        fHash.resize(sz);
+        pk.resize(sz);
+        fHash[0] = s[0]-'a'+1;
+        pk[0] = 1;
+        for(int i=1;i<sz;i++){
+            fHash[i] = (fHash[i-1]*p + (s[i]-'a'+1))%mod;
+            pk[i] = (pk[i-1]*p)%mod;
+        }
+    }
+    ll gethash(int l, int r){
+        if(l==0) return fHash[r];
+        else return ((fHash[r]-fHash[l-1]*pk[r-l+1])%mod + mod)%mod;
+    }
+};
+
+Ideas 1: Pattern Matching
+
+    a. quickhash pattern
+    b. hasher text
+    c. for substring of length pattern in text compare hashes
+
+
+Ideas 2: Longest common substring
+
+    a. If there is a substring of length X in both S1 and S2, then there is also 
+        a substring of length X-1 => Binary search
+
+    b. Binary Search on length of common substring say L
+    c. Store the hashing of L length substring in map for smaller string
+    d. For larger string compare the hash for every substring of length L
+    e. If hash function match then this is a probable answer continue the binary search
+
+    TC -> O(m*(log^2(n)))

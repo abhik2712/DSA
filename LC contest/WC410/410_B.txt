@@ -1,0 +1,46 @@
+// LC WC 410 B
+
+2. Problem: https://leetcode.com/problems/count-the-number-of-good-nodes/description/
+
+There is an undirected tree with n nodes labeled from 0 to n - 1, and rooted at node 0. You are given a 2D integer array edges of length n - 1, where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the tree.
+
+A node is good if all the 
+subtrees
+ rooted at its children have the same size.
+
+Return the number of good nodes in the given tree.
+
+A subtree of treeName is a tree consisting of a node in treeName and all of its descendants.
+
+3. Main idea
+
+    1. DFS on trees
+    2. How to store / find children
+    3. Store subtree size
+
+4. Implementation
+
+class Solution {
+  int dfs(int node, int par, vector<vector<int>> &adj, int &res) {
+    // These are the leaf conditions
+    int sz = 1, sz_child = -1;
+    bool isGood = true;
+    for(auto &adjNode : adj[node]) {
+      if(adjNode != par) {
+        int currsz = dfs(adjNode, node, adj, res);
+        // sz stores the size of children + itself
+        // currsz stores the size of each leaf
+        sz += currsz;
+        if(sz_child == -1) {
+          sz_child = currsz;
+        } else if(sz_child != currsz) {
+          isGood = false;
+        }
+      }
+    }
+    if(isGood) res++;
+    return sz;
+  }
+}
+
+5. Optimal Code
