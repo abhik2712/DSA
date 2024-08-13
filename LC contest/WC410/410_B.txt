@@ -29,7 +29,7 @@ class Solution {
       if(adjNode != par) {
         int currsz = dfs(adjNode, node, adj, res);
         // sz stores the size of children + itself
-        // currsz stores the size of each leaf
+        // currsz stores the size of each child
         sz += currsz;
         if(sz_child == -1) {
           sz_child = currsz;
